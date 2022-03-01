@@ -1,0 +1,100 @@
+#%RAML 1.0
+title: craft-online-shopping-api-spec
+
+types:
+  my_products_datatype:
+      
+/products:
+  get:
+    description: Get all producs
+    queryParameters:
+      name:
+        displayName: Name
+        type: string
+        description: The name of the product
+        required: true
+        maxLength: 15
+        example: admin
+      product_type:
+        enum: [electronics, food]
+      productid:
+        type: integer
+        description: The id of the product
+        required: false
+        example: 485754
+    headers:
+        connection-Type:
+          displayName: content-type
+          description: json data
+          type: string
+        Authorization: 
+          type: integer
+          description: basic auth
+        Session:
+          description: connection session is stored
+          type: string
+
+    responses:
+      200:
+        body:
+          application/json:
+            
+            example:
+             [{
+               "productid": 2,
+               "categoryid":10,
+               "description": "cor I 7",
+               "name": "dell laptop",
+               "price": 1000,
+                "video_url":"http://tests.com/dell-laptop"
+             }]                     
+
+  /{productid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: my_products_datatype
+              example:  !include examples/products.json
+        404:
+         body:
+           application/json:
+             example:
+               {
+                  message: "resource not found"
+               }
+/users:
+  post:
+    body:
+      application/json:
+        example:
+          {
+            "email": "peter@gmail.com",
+            "username": "peter"
+          }
+    responses:
+     201:
+       body:
+         application/json:
+           example:
+             {
+               "uid": 4585
+             }       
+/orders:
+   get:
+     description: 
+     queryParameters:
+       displayName: 
+        type: string
+        description: The name of orders
+        required: false
+        example: cellphone
+    
+
+            
+       
+
+       
+    
+/category:
